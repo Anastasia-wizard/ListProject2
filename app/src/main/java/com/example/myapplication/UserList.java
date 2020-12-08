@@ -10,6 +10,7 @@ import com.example.myapplication.database.UserDbSchema;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 // Синглетный класс (может быть создан только один объект)
 public class UserList {
@@ -75,11 +76,11 @@ public class UserList {
                 new String[]{uuidString});
     }
 
-    public void  deleteUser(User user) {
-        String uuidString = user.getUuid().toString();
+    public void  deleteUser(UUID uuid) {
+        database.delete(UserDbSchema.UserTable.NAME, "uuid = ?", new String[]{String.valueOf(uuid)});
 
 
-         database.delete(UserDbSchema.UserTable.NAME,uuidString, null);
+
           // Удаляем пользователя
 //ааааааааfffffffffffff
     }

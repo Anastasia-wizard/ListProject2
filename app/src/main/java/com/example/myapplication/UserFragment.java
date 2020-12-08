@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,15 +26,15 @@ public class UserFragment extends Fragment {
         user = (User) bundle.getSerializable("user"); // Принимаем объект user
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_user,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
         userList = UserList.get(getActivity());
         userName_userLastname_View = view.findViewById(R.id.userName_userLastname_View);
         editName = view.findViewById(R.id.editName);
         editLastname = view.findViewById(R.id.editLastname);
         updateBtn = view.findViewById(R.id.updateBtn);
         deleteBtn = view.findViewById(R.id.deleteBtn);
-        final String userName = "Имя: "+user.getUserName()+"\n"+"Фамилия: "+user.getUserLastName();
+        final String userName = "Имя: " + user.getUserName() + "\n" + "Фамилия: " + user.getUserLastName();
         userName_userLastname_View.setText(userName);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,21 +45,29 @@ public class UserFragment extends Fragment {
                 user.setUserName(newUserName);
                 user.setUserLastName(newUserLastname);
                 userList.updateUser(user);
-                Toast.makeText(getActivity(),"Данные изменены",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Данные изменены", Toast.LENGTH_SHORT).show();
+
             }
         });
-       // return view;
+
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userList.deleteUser(user);
+                userList.deleteUser(user.getUuid());
                 Toast.makeText(getActivity(), "Данные удалены", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), MainActivity.class));
             }
         });
         return view;
-
-
-            }
     }
 
+
+
+
+
+
+
+
+
+}
